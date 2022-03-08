@@ -1,9 +1,6 @@
 name: Nightly rustc build
 
 on:
-  schedule:
-    # Run at 5:30 am, daily.
-    - cron: '15 5 * * *'
   workflow_dispatch:
 
 env:
