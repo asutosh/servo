@@ -1,9 +1,9 @@
 name: Nightly builds
 
 on:
-  schedule:
+  #schedule:
     # Run at 5:30 am, daily.
-    - cron: '15 5 * * *'
+    # - cron: '15 5 * * *'
   workflow_dispatch:
 
 env:
@@ -27,10 +27,10 @@ jobs:
         run: python3 ./mach build --release
       - name: Package
         run: python3 ./mach package --release
-      - name: Upload
-        run: python3 ./mach upload-nightly linux --secret-from-environment
-        env:
-          S3_UPLOAD_CREDENTIALS: ${{ secrets.S3_UPLOAD_CREDENTIALS }}
+      #- name: Upload
+      #  run: python3 ./mach upload-nightly linux --secret-from-environment
+      #  env:
+      #    S3_UPLOAD_CREDENTIALS: ${{ secrets.S3_UPLOAD_CREDENTIALS }}
 
   upload-mac:
     name: Upload nightly (macOS)
@@ -58,13 +58,14 @@ jobs:
         run: python3 ./mach package --release
       - name: Smoketest
         run: ./etc/ci/macos_package_smoketest.sh target/release/servo-tech-demo.dmg
-      - name: Upload
-        run: python3 ./mach upload-nightly mac --secret-from-environment
-        env:
-          S3_UPLOAD_CREDENTIALS: ${{ secrets.S3_UPLOAD_CREDENTIALS }}
-          GITHUB_HOMEBREW_TOKEN: ${{ secrets.HOMEBREW_TOKEN }}
+      #- name: Upload
+      #  run: python3 ./mach upload-nightly mac --secret-from-environment
+      #  env:
+      #    S3_UPLOAD_CREDENTIALS: ${{ secrets.S3_UPLOAD_CREDENTIALS }}
+      #    GITHUB_HOMEBREW_TOKEN: ${{ secrets.HOMEBREW_TOKEN }}
 
   upload-win:
+    if: ('1' == '2')
     name: Upload nightly (Windows)
     runs-on: windows-2019
     steps:
@@ -104,6 +105,7 @@ jobs:
           S3_UPLOAD_CREDENTIALS: ${{ secrets.S3_UPLOAD_CREDENTIALS }}
 
   upload-uwp:
+    if: ('1' == '2')
     name: Upload nightly (UWP)
     runs-on: windows-2019
     steps:
